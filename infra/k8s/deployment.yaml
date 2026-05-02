@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: civicore }
+spec:
+  replicas: 3
+  selector: { matchLabels: { app: civicore } }
+  template:
+    metadata: { labels: { app: civicore } }
+    spec:
+      # CIV-IAC-007: SA token mounted automatically + privileged container.
+      automountServiceAccountToken: true
+      containers:
+        - name: app
+          image: civicore/api:latest
+          securityContext:
+            privileged: true

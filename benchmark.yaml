@@ -1,0 +1,36 @@
+benchmark_id: civicore-identity
+corpus_version: "0.1.0"
+industry: govtech
+sub_industry: digital-identity
+frameworks: [NIST-800-53-High, eIDAS]
+
+findings:
+  sast:
+    - { id: CIV-SAST-001, cwe: CWE-89,  severity: high,     file: internal/handlers/citizens.go }
+    - { id: CIV-SAST-002, cwe: CWE-208, severity: medium,   file: internal/auth/totp.go }
+    - { id: CIV-SAST-003, cwe: CWE-798, severity: critical, file: internal/config/config.go }
+    - { id: CIV-SAST-004, cwe: CWE-79,  severity: medium,   file: internal/handlers/profile.go }
+    - { id: CIV-SAST-005, cwe: CWE-22,  severity: high,     file: internal/handlers/docs.go }
+    - { id: CIV-SAST-006, cwe: CWE-918, severity: high,     file: internal/services/registry.go }
+    - { id: CIV-SAST-007, cwe: CWE-330, severity: medium,   file: internal/auth/session.go }
+    - { id: CIV-SAST-008, cwe: CWE-326, severity: high,     file: internal/transport/tls.go }
+    - { id: CIV-SAST-009, cwe: CWE-639, severity: high,     file: internal/handlers/citizens.go }
+    - { id: CIV-SAST-010, cwe: CWE-352, severity: high,     file: internal/middleware/cors.go }
+    - { id: CIV-SAST-011, cwe: CWE-117, severity: medium,   file: internal/middleware/log.go }
+  iac:
+    - { id: CIV-IAC-001, class: rds-public,             file: infra/terraform/rds.tf }
+    - { id: CIV-IAC-002, class: rds-no-encrypt,         file: infra/terraform/rds.tf }
+    - { id: CIV-IAC-003, class: rds-no-deletion-protection, file: infra/terraform/rds.tf }
+    - { id: CIV-IAC-004, class: sg-open-db-port,        file: infra/terraform/main.tf }
+    - { id: CIV-IAC-005, class: kms-wildcard,           file: infra/terraform/kms.tf }
+    - { id: CIV-IAC-006, class: container-root,         file: Dockerfile }
+    - { id: CIV-IAC-007, class: k8s-privileged-token,   file: infra/k8s/deployment.yaml }
+  sca:
+    - { id: CIV-SCA-001, package: "github.com/golang-jwt/jwt/v4", version: "4.4.1", advisory: "CVE-2024-51744" }
+    - { id: CIV-SCA-002, package: "github.com/lestrrat-go/jwx",   version: "1.2.16", advisory: "CVE-2024-22195" }
+    - { id: CIV-SCA-003, package: "golang.org/x/crypto",          version: "0.0.0-20220525230936-793ad666bf5e", advisory: "CVE-2022-27191" }
+  pipeline:
+    - { id: CIV-CI-001, class: hardcoded-secret,    file: .github/workflows/ci.yml }
+    - { id: CIV-CI-002, class: missing-permissions, file: .github/workflows/ci.yml }
+    - { id: CIV-CI-003, class: pr-target-unsafe,    file: .github/workflows/ci.yml }
+    - { id: CIV-CI-004, class: image-no-digest-pin, file: .github/workflows/ci.yml }

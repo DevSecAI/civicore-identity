@@ -1,0 +1,20 @@
+# CIV-CI-002: no permissions block.
+name: ci
+on:
+  push: { branches: [main] }
+  pull_request_target: { branches: [main] }   # CIV-CI-003
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # CIV-CI-001: live OIDC client secret.
+      OIDC_CLIENT_SECRET: oidc_secret_civicore_4M9XzQ1RyEXAMPLE
+    steps:
+      - uses: actions/checkout@v3
+        with: { ref: ${{ github.event.pull_request.head.sha }} }
+      - uses: actions/setup-go@v5
+        with: { go-version: "1.22" }
+      - run: go test ./...
+      # CIV-CI-004: pushes :latest to public registry, no digest pin.
+      - run: docker build -t docker.io/civicore/api:latest .
+      - run: docker push docker.io/civicore/api:latest
