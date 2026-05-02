@@ -2,7 +2,7 @@
 
 > ⚠️ **ARKO Demo Application — contains intentional vulnerabilities. Do not deploy.**
 
-Citizen identity verification API for a (fictional) national digital-identity programme. Part of the [ARKO Coverage Demos](https://github.com/DevSecAI/arko-benchmarks) suite.
+Citizen identity verification API for a (fictional) national digital-identity programme. Part of the [ARKO Coverage Demos](https://github.com/DevSecAI/arko-demos) suite.
 
 Stack: Go 1.22 · Gin · Postgres · OIDC · AWS · Kubernetes.
 
